@@ -1,89 +1,62 @@
 <?php
-    include 'header.php';
+include 'header.php';
+require '../connect.php';
+$bdd = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE);
+
 ?>
 
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Welcome on the WildTrombi!</h1>
-            <p>Discover our wilders and teachers</p>
-            <p>
-                <a class="btn btn-primary btn-lg">Learn more</a>
-            </p>
-        </div>
+<div class="jumbotron">
+    <div class="container">
+        <h1>Welcome on the WildTrombi!</h1>
+        <p>Discover our wilders and teachers</p>
+        <p>
+            <a class="btn btn-primary btn-lg">Learn more</a>
+        </p>
     </div>
+</div>
 
-    <a href="add.php" class="pull-right btn btn-lg btn-primary">
-        <span class="glyphicon glyphicon-plus"></span>
-        Add a Wilder
-    </a>
-    <h2 class="">Our wilders</h2>
-    <hr/>
+<a href="add.php" class="pull-right btn btn-lg btn-primary">
+    <span class="glyphicon glyphicon-plus"></span>
+    Add a Wilder
+</a>
+<h2 class="">Our wilders</h2>
+<hr/>
 
-    <div class="row">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <figure class="thumbnail">
-                <img src="assets/images/photoSB.png" alt="">
-                <figcaption class="caption">
-                    <h3>Sylvain</h3>
-                    <p>
-                        Teacher
-                    </p>
-                    <p>
-                        <a href="#" class="btn btn-primary">Edit</a>
-                        <a href="#" class="btn btn-default">Delete</a>
-                    </p>
-                </figcaption>
-            </figure>
-        </div>
+<div class="row">
+
+<?php
+    $req = "SELECT p.id, firstname, lastname, c.name 
+              FROM person p
+                JOIN category c ON c.id=p.category_id
+              LIMIT 0, 10";
+    $result = mysqli_query($bdd, $req);
+
+    while($data = mysqli_fetch_assoc($result)) : ?>
 
         <div class="col-sm-6 col-md-4 col-lg-3">
             <figure class="thumbnail">
                 <img src="http://via.placeholder.com/353x353" alt="">
                 <figcaption class="caption">
-                    <h3>Christophe</h3>
-                    <p>
-                        Wilder
-                    </p>
+                    <h3><?= ucfirst(htmlentities($data['firstname'])) . ' ' . ucfirst(htmlentities($data['lastname'])) ?></h3>
+                    <p><?= htmlentities($data['name']) ?></p>
                     <p>
                         <a href="#" class="btn btn-primary">Edit</a>
-                        <a href="#" class="btn btn-default">Delete</a>
+                        <form action="delete.php" method="post">
+                            <input type="hidden" name="id" value="<?= $data['id'] ?>"/>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+
                     </p>
                 </figcaption>
             </figure>
         </div>
 
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <figure class="thumbnail">
-                <img src="http://via.placeholder.com/353x353" alt="">
-                <figcaption class="caption">
-                    <h3>Nico</h3>
-                    <p>
-                        Teacher
-                    </p>
-                    <p>
-                        <a href="#" class="btn btn-primary">Edit</a>
-                        <a href="#" class="btn btn-default">Delete</a>
-                    </p>
-                </figcaption>
-            </figure>
-        </div>
+    <?php endwhile;?>
 
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <figure class="thumbnail">
-                <img src="http://via.placeholder.com/353x353" alt="">
-                <figcaption class="caption">
-                    <h3>Paul</h3>
-                    <p>
-                        Wilder
-                    </p>
-                    <p>
-                        <a href="#" class="btn btn-primary">Edit</a>
-                        <a href="#" class="btn btn-default">Delete</a>
-                    </p>
-                </figcaption>
-            </figure>
-        </div>
-    </div>
+
+
+
+</div>
 
 
 <?php

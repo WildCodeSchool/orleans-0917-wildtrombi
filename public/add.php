@@ -1,11 +1,13 @@
 <?php
 include 'header.php';
+require '../connect.php';
+$bdd = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE);
 
 
 if ($_POST) {
 
     foreach ($_POST as $key=>$value) {
-        $cleanPost[$key] = trim(htmlentities($value));
+        $cleanPost[$key] = trim(mysqli_real_escape_string($bdd, $value));
     }
 
     if (empty($_POST['firstname'])) {
@@ -32,12 +34,15 @@ if ($_POST) {
 
         <?php
     else :
-        ?>
-        <div class="well">
-            Hello <?= $cleanPost['firstname'] . ' ' . $cleanPost['lastname'] ?>
+        $firstname = $cleanPost['firstname'];
+        $lastname = $cleanPost['lastname'];
+        $category = $cleanPost['category'];
 
-        </div>
-    <?php
+        $req = "INSERT INTO person (firstname, lastname, category_id) 
+                VALUES ('$firstname', '$lastname', '$category' )";
+        $result = mysqli_query($bdd, $req);
+
+        header("Location: index.php");
     endif;
 }
 
@@ -63,16 +68,17 @@ if ($_POST) {
         <label for="category">Category</label>
         <select name="category" id="category" class="form-control">
             <?php
-            $options = ['wilder', 'teacher'];
-            foreach ($options as $option) : ?>
-                <option value="<?= $option ?>"
-                    <?php if (!empty($cleanPost) && $cleanPost['category'] == $option) : ?>
+            $req = "SELECT id, name FROM category";
+            $result = mysqli_query($bdd, $req);
+            while($data = mysqli_fetch_assoc($result)) : ?>
+                <option value="<?= $data['id'] ?>"
+                    <?php if (!empty($cleanPost) && $cleanPost['category'] == $data['id']) : ?>
                         selected
                     <?php endif; ?>
                 >
-                    <?= 'You are a ' . ucfirst($option) ?>
+                    <?= ucfirst($data['name']) ?>
                 </option>
-            <?php endforeach;
+            <?php endwhile;
             ?>
         </select>
     </fieldset>

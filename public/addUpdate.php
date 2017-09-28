@@ -3,6 +3,22 @@ include 'header.php';
 require '../connect.php';
 $bdd = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE);
 
+$isUpdate = false;
+
+if (!empty($_GET['id'])) {
+    $isUpdate = true;
+    $req = "SELECT firstname, lastname, category_id as category
+            FROM person
+              WHERE id='" . $_GET['id']. "'";
+    $result = mysqli_query($bdd, $req);
+    while($data = mysqli_fetch_assoc($result))  {
+        $cleanPost['firstname'] = $data['firstname'];
+        $cleanPost['lastname'] = $data['lastname'];
+        $cleanPost['category'] = $data['category'];
+    }
+} else {
+    $title = 'Add';
+}
 
 if ($_POST) {
 
@@ -18,6 +34,10 @@ if ($_POST) {
 
     if (empty($_POST['lastname'])) {
         $errors[] = 'Lastname is required';
+    }
+
+    if (empty($_POST['category'])) {
+        $errors[] = 'Category is required';
     }
 
     if (!empty($errors)) : ?>
@@ -38,8 +58,15 @@ if ($_POST) {
         $lastname = $cleanPost['lastname'];
         $category = $cleanPost['category'];
 
-        $req = "INSERT INTO person (firstname, lastname, category_id) 
-                VALUES ('$firstname', '$lastname', '$category' )";
+        if (empty($cleanPost['id'])) :
+            $req = "INSERT INTO person (firstname, lastname, category_id) 
+                    VALUES ('$firstname', '$lastname', '$category' )";
+        else :
+            $id = $cleanPost['id'];
+            $req = "UPDATE person SET firstname='$firstname', lastname='$lastname', category_id='$category'
+                      WHERE id='$id'";
+        endif;
+
         $result = mysqli_query($bdd, $req);
 
         header("Location: index.php");
@@ -50,9 +77,17 @@ if ($_POST) {
 
 ?>
 
-<h1>Add a wilder</h1>
+<h1>
+    <?php
+        if ($isUpdate) {
+            echo 'Update ' . ucfirst($cleanPost['firstname']) .' '. ucfirst($cleanPost['lastname']);
+        }  else {
+            echo 'Add a new Wilder';
+        }
+    ?>
+</h1>
 
-<form action="" method="post">
+<form action="addUpdate.php" method="post">
 
     <fieldset class="form-group">
         <legend>Enter your name</legend>
@@ -62,6 +97,7 @@ if ($_POST) {
         <label for="lastname">Lastname</label>
         <input type="text" class="form-control" name="lastname" id="lastname"
                placeholder="Enter your lastname"  value="<?= $cleanPost['lastname'] ?? '' ?>"/>
+        <input type="hidden" name="id" value="<?= $_GET['id'] ?? '' ?>" />
     </fieldset>
 
     <fieldset class="form-group">
@@ -83,7 +119,10 @@ if ($_POST) {
         </select>
     </fieldset>
 
-    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add Wilder</button>
+    <button type="submit" class="btn btn-<?= $isUpdate ? 'info' : 'success' ?> ">
+
+        <span class="glyphicon glyphicon-<?= $isUpdate ? 'edit' : 'plus' ?>"></span> <?= $isUpdate ? 'Update' : 'Add' ?> Wilder
+    </button>
 </form>
 
 <hr/>

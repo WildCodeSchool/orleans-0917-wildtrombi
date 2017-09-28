@@ -15,7 +15,7 @@ $bdd = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE);
     </div>
 </div>
 
-<a href="add.php" class="pull-right btn btn-lg btn-primary">
+<a href="addUpdate.php" class="pull-right btn btn-lg btn-primary">
     <span class="glyphicon glyphicon-plus"></span>
     Add a Wilder
 </a>
@@ -40,7 +40,7 @@ $bdd = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE);
                     <h3><?= ucfirst(htmlentities($data['firstname'])) . ' ' . ucfirst(htmlentities($data['lastname'])) ?></h3>
                     <p><?= htmlentities($data['name']) ?></p>
                     <p>
-                        <a href="#" class="btn btn-primary">Edit</a>
+                        <a href="addUpdate.php?id=<?= $data['id'] ?>" class="btn btn-primary">Edit</a>
                         <form action="delete.php" method="post">
                             <input type="hidden" name="id" value="<?= $data['id'] ?>"/>
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -52,9 +52,6 @@ $bdd = mysqli_connect(SERVER, USERNAME, PASSWORD, DATABASE);
         </div>
 
     <?php endwhile;?>
-
-
-
 
 </div>
 

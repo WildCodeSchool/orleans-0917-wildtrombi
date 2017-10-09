@@ -1,0 +1,16 @@
+{
+    "name": "sylvain/wild-trombi",
+    "authors": [
+        {
+            "name": "Sylvain Blondeau",
+            "email": "sylvain@wildcodeschool.fr"
+        }
+    ],
+    "autoload" : {
+        "psr-4": {
+            "WildTrombi\\" : "src/",
+            "Test\\" : "tests/"
+        }
+    },
+    "require": {}
+}

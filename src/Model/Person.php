@@ -39,44 +39,6 @@ class Person
     /**
      * @return mixed
      */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * @param mixed $firstname
-     * @return Person
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
-     * @param mixed $lastname
-     * @return Person
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getBirthdate()
     {
         return $this->birthdate;
@@ -117,5 +79,41 @@ class Person
         return ucfirst($this->getFirstname()) . ' ' . strtoupper($this->getLastname());
     }
 
+    /**
+     * @return mixed
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
 
+    /**
+     * @param mixed $firstname
+     * @return Person
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param mixed $lastname
+     * @return Person
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
 }

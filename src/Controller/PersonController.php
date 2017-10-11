@@ -12,15 +12,17 @@ namespace WildTrombi\Controller;
 use WildTrombi\Model\Person;
 use WildTrombi\Model\PersonManager;
 
-class PersonController
+class PersonController extends Controller
 {
+
     public function showAllAction()
     {
         $personManager = new PersonManager();
         $persons = $personManager->findAll();
 
-        require '../src/View/Person/showAll.php';
-
+        return $this->twig->render('Person/showAll.html.twig', [
+            'persons' => $persons,
+        ]);
     }
 
     public function showOneAction($id)
@@ -28,6 +30,8 @@ class PersonController
         $personManager = new PersonManager();
         $person = $personManager->find($id);
 
-        require '../src/View/Person/showOne.php';
+        return $this->twig->render('Person/showOne.html.twig', [
+            'person' => $person,
+        ]);
     }
 }

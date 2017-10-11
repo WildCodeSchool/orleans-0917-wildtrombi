@@ -12,5 +12,7 @@
             "Test\\" : "tests/"
         }
     },
-    "require": {}
+    "require": {
+        "twig/twig": "^2.4"
+    }
 }

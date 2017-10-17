@@ -1,0 +1,39 @@
+{% include 'header.html.twig' %}
+{% if errors %}
+    <ul class="alert alert-danger">
+        {% for error in errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+<form action="index.php?route=addPerson" method="post">
+
+    <fieldset class="form-group">
+        <legend>Enter your name</legend>
+        <label for="firstname">Firstname</label>
+        <input type="text" class="form-control" name="firstname" id="firstname"
+               placeholder="Enter your firstname" value="{{ person.firstname }}"/>
+        <label for="lastname">Lastname</label>
+        <input type="text" class="form-control" name="lastname" id="lastname"
+               placeholder="Enter your lastname" value="{{ person.lastname }}"/>
+        <label for="birthdate">Birthdate</label>
+        <input type="date" class="form-control" name="birthdate" id="birthdate"
+               placeholder="Enter your birthdate yyyy/mm/dd" value="{{ person.birthdate }}"/>
+    </fieldset>
+
+    <fieldset class="form-group">
+        <label for="category">Category</label>
+        <select name="category" id="category" class="form-control">
+            {% for category in categories %}
+                <option {{ person.category == category.id ? 'selected' }} value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </fieldset>
+
+    <button type="submit" class="btn btn-success">
+
+        <span class="glyphicon glyphicon-plus"></span>Add Wilder
+    </button>
+</form>
+
+{% include 'footer.html.twig' %}

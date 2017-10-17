@@ -1,5 +1,4 @@
 <?php
-include 'header.php';
 require '../connect.php';
 require '../vendor/autoload.php';
 
@@ -12,7 +11,11 @@ if ($route == 'showAll') {
 } elseif ($route == 'showOne') {
     $personController = new \WildTrombi\Controller\PersonController();
     echo  $personController->showOneAction($_GET['id']);
-} else {
+} elseif ($route == 'addPerson') {
+    $personController = new \WildTrombi\Controller\PersonController();
+    echo  $personController->addAction();
+}
+else {
     echo 'La page n\'existe pas';
 }
 

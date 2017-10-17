@@ -9,27 +9,21 @@
 namespace WildTrombi\Model;
 
 
-class PersonManager
+class PersonManager extends EntityManager
 {
-    private $pdo;
-
-    public function __construct()
-    {
-        $this->pdo = new \PDO(DSN, USERNAME, PASSWORD);
-    }
 
     public function findAll()
     {
-        $req = "SELECT * FROM person";
-        $statement = $this->pdo->query($req);
+        $query = "SELECT * FROM person";
+        $statement = $this->pdo->query($query);
 
         return $statement->fetchAll(\PDO::FETCH_CLASS, \WildTrombi\Model\Person::class);
     }
 
     public function find(int $id)
     {
-        $req = "SELECT * FROM person WHERE id=:id";
-        $statement = $this->pdo->prepare($req);
+        $query = "SELECT * FROM person WHERE id=:id";
+        $statement = $this->pdo->prepare($query);
         $statement->bindValue('id', $id, \PDO::PARAM_INT);
         $statement->execute();
 
@@ -37,9 +31,17 @@ class PersonManager
         return $persons[0];
     }
 
-    public function insert()
+    public function insert(Person $person)
     {
-        // TODO
+        $query = "INSERT INTO person 
+                  (firstname, lastname, birthdate, category_id) 
+                  VALUES (:firstname, :lastname, :birthdate, :category)";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindValue('firstname', $person->getFirstname(), \PDO::PARAM_STR);
+        $statement->bindValue('lastname', $person->getLastname(), \PDO::PARAM_STR);
+        $statement->bindValue('birthdate', $person->getBirthdate(), \PDO::PARAM_STR);
+        $statement->bindValue('category', $person->getCategory(), \PDO::PARAM_INT);
+        $statement->execute();
     }
 
     public function update()

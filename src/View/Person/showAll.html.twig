@@ -1,5 +1,5 @@
 <ul>
-    {% for person in persons %}
-        <li> {{ person.name }}</li>
+    {% for personCategory in personCategories %}
+        <li> {{ personCategory.person.name }} {{ personCategory.category.name }}</li>
     {% endfor %}
 </ul>

@@ -15,7 +15,7 @@ class Person
     private $firstname;
     private $lastname;
     private $birthdate;
-    private $category;
+    private $category_id;
 
     /**
      * @return mixed
@@ -60,7 +60,7 @@ class Person
      */
     public function getCategory()
     {
-        return $this->category;
+        return $this->category_id;
     }
 
     /**
@@ -69,7 +69,7 @@ class Person
      */
     public function setCategory($category)
     {
-        $this->category = $category;
+        $this->category_id = $category;
 
         return $this;
     }

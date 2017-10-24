@@ -58,9 +58,11 @@ class Person
     /**
      * @return mixed
      */
-    public function getCategory()
+    public function getCategory() : Category
     {
-        return $this->category_id;
+        $categoryManager = new CategoryManager();
+        $category = $categoryManager->find($this->category_id);
+        return $category;
     }
 
     /**

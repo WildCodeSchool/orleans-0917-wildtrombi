@@ -20,7 +20,7 @@ class PersonManager extends EntityManager
         return $statement->fetchAll(\PDO::FETCH_CLASS, \WildTrombi\Model\Person::class);
     }
 
-    public function find(int $id)
+    public function find(int $id) : Person
     {
         $query = "SELECT * FROM person WHERE id=:id";
         $statement = $this->pdo->prepare($query);
@@ -44,14 +44,25 @@ class PersonManager extends EntityManager
         $statement->execute();
     }
 
-    public function update()
+    public function update(Person $person)
     {
-        // TODO
+        $query = "UPDATE person SET firstname=:firstname, lastname=:lastname, birthdate=:birthdate, category_id=:category 
+                  WHERE id=:id";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindValue('firstname', $person->getFirstname(), \PDO::PARAM_STR);
+        $statement->bindValue('lastname', $person->getLastname(), \PDO::PARAM_STR);
+        $statement->bindValue('birthdate', $person->getBirthdate(), \PDO::PARAM_STR);
+        $statement->bindValue('category', $person->getCategory(), \PDO::PARAM_INT);
+        $statement->bindValue('id', $person->getId(), \PDO::PARAM_INT);
+        $statement->execute();
     }
 
-    public function delete()
+    public function delete(Person $person)
     {
-        // TODO
+        $query = "DELETE FROM person WHERE id=:id";
+        $statement = $this->pdo->prepare($query);
+        $statement->bindValue('id', $person->getId(), \PDO::PARAM_INT);
+        $statement->execute();
     }
 
 

@@ -1,5 +1,46 @@
-<ul>
-    {% for personCategory in personCategories %}
-        <li> {{ personCategory.person.name }} {{ personCategory.category.name }}</li>
-    {% endfor %}
-</ul>
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Show all persons{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Welcome on the WildTrombi!</h1>
+            <p>Discover our wilders and teachers</p>
+            <p>
+                <a class="btn btn-primary btn-lg">Learn more</a>
+            </p>
+        </div>
+    </div>
+    <a href="?route=addPerson" class="pull-right btn btn-lg btn-primary">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add a Wilder
+    </a>
+    <h2 class="">Our wilders</h2>
+    <hr/>
+    <div class="row">
+        {% for person in persons %}
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <div class="thumbnail">
+                    <img src="http://via.placeholder.com/250x250" alt="{{ person.name }}">
+                    <div class="caption">
+                        <h3>{{ person.name }}</h3>
+                        <p>
+                            {{ person.category.name }}
+                        </p>
+                        <p>
+                            <a href="?route=updatePerson&id={{ person.id }}" class="btn btn-primary">Edit</a>
+                            <form action="?route=deletePerson" method="post">
+                                <input type="hidden" name="id" value="{{ person.id }}"/>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+{% endblock %}
+
+

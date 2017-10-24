@@ -6,7 +6,7 @@
         {% endfor %}
     </ul>
 {% endif %}
-<form action="index.php?route=addPerson" method="post">
+<form action="index.php?route={{ person.id ? 'updatePerson' : 'addPerson' }}" method="post">
 
     <fieldset class="form-group">
         <legend>Enter your name</legend>
@@ -19,6 +19,9 @@
         <label for="birthdate">Birthdate</label>
         <input type="date" class="form-control" name="birthdate" id="birthdate"
                placeholder="Enter your birthdate yyyy/mm/dd" value="{{ person.birthdate }}"/>
+        {% if person.id is defined %}
+            <input type="text" name="id" value="{{ person.id }}"/>
+        {% endif %}
     </fieldset>
 
     <fieldset class="form-group">

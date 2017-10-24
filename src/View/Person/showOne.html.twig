@@ -1,5 +1,5 @@
-{% include 'header.html.twig' %}
-
+{% extends 'base.html.twig' %}
+{% block title %}Show one person{% endblock %}
+{%  block other %}
 <h1>Hello {{ person.name }}</h1>
-
-{% include 'footer.html.twig' %}
+{% endblock %}

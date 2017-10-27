@@ -40,7 +40,7 @@ class PersonManager extends EntityManager
         $statement->bindValue('firstname', $person->getFirstname(), \PDO::PARAM_STR);
         $statement->bindValue('lastname', $person->getLastname(), \PDO::PARAM_STR);
         $statement->bindValue('birthdate', $person->getBirthdate(), \PDO::PARAM_STR);
-        $statement->bindValue('category', $person->getCategory(), \PDO::PARAM_INT);
+        $statement->bindValue('category', $person->getCategory()->getId(), \PDO::PARAM_INT);
         $statement->execute();
     }
 
@@ -52,7 +52,7 @@ class PersonManager extends EntityManager
         $statement->bindValue('firstname', $person->getFirstname(), \PDO::PARAM_STR);
         $statement->bindValue('lastname', $person->getLastname(), \PDO::PARAM_STR);
         $statement->bindValue('birthdate', $person->getBirthdate(), \PDO::PARAM_STR);
-        $statement->bindValue('category', $person->getCategory(), \PDO::PARAM_INT);
+        $statement->bindValue('category', $person->getCategory()->getId(), \PDO::PARAM_INT);
         $statement->bindValue('id', $person->getId(), \PDO::PARAM_INT);
         $statement->execute();
     }

@@ -58,11 +58,14 @@ class Person
     /**
      * @return mixed
      */
-    public function getCategory() : Category
+    public function getCategory()
     {
-        $categoryManager = new CategoryManager();
-        $category = $categoryManager->find($this->category_id);
-        return $category;
+        if ($this->category_id) {
+            $categoryManager = new CategoryManager();
+            $category = $categoryManager->find($this->category_id);
+
+            return $category;
+        }
     }
 
     /**

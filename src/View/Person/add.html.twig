@@ -27,8 +27,13 @@
     <fieldset class="form-group">
         <label for="category">Category</label>
         <select name="category" id="category" class="form-control">
-            {% for category in categories %}
-                <option {{ person.category == category.id ? 'selected' }} value="{{ category.id }}">{{ category.name }}</option>
+            {% for selectCategory in categories %}
+                <option
+                        {% if person.category %}
+                            {{ person.category.id == selectCategory.id ? 'selected' }}
+                        {% endif %}
+                        value="{{ selectCategory.id }}">{{ selectCategory.name }}
+                </option>
             {% endfor %}
         </select>
     </fieldset>
